@@ -5,10 +5,11 @@ DISTDIR="$SPARK_HOME/dist"
 # Make directories
 rm -rf "$DISTDIR"
 mkdir -p "$DISTDIR/jars"
+mkdir -p "$DISTDIR/assembly/target/scala-2.10/jars"
 
 # Copy jars
 cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/jars/"
-
+cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/assembly/target/scala-2.10/jars"
 # Copy examples and dependencies
 mkdir -p "$DISTDIR/examples/jars"
 cp "$SPARK_HOME"/examples/target/scala*/jars/* "$DISTDIR/examples/jars"

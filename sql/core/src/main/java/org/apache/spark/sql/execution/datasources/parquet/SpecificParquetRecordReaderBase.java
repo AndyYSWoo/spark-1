@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import me.yongshang.cbfm.CBFM;
 import org.apache.parquet.filter2.compat.RowGroupFilter;
 import scala.Option;
 
@@ -108,7 +109,10 @@ public abstract class SpecificParquetRecordReaderBase<T> extends RecordReader<Vo
       footer = readFooter(configuration, file, range(split.getStart(), split.getEnd()));
       MessageType fileSchema = footer.getFileMetaData().getSchema();
       FilterCompat.Filter filter = getFilter(configuration);
-      blocks = RowGroupFilter.filterRowGroupsByCBFM(filter, footer.getBlocks(), fileSchema);
+      blocks = footer.getBlocks();
+      if(CBFM.ON){
+        blocks = RowGroupFilter.filterRowGroupsByCBFM(filter, blocks, fileSchema);
+      }
       blocks = filterRowGroups(filter, blocks, fileSchema);
 //      blocks = filterRowGroups(filter, footer.getBlocks(), fileSchema);
     } else {

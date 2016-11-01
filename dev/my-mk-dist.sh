@@ -7,9 +7,21 @@ rm -rf "$DISTDIR"
 mkdir -p "$DISTDIR/jars"
 mkdir -p "$DISTDIR/assembly/target/scala-2.10/jars"
 
+# Replace suitable jars
+rm -f "$SPARK_HOME"/assembly/target/scala*/jars/parquet-common-1.8.1.jar
+rm -f "$SPARK_HOME"/assembly/target/scala*/jars/parquet-encoding-1.8.1.jar
+rm -f "$SPARK_HOME"/assembly/target/scala*/jars/parquet-column-1.8.1.jar
+rm -f "$SPARK_HOME"/assembly/target/scala*/jars/parquet-hadoop-1.8.1.jar
+
+
+cp ~/.m2/repository/org/apache/parquet/parquet-column/1.8.2-SNAPSHOT/parquet-column-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
+cp ~/.m2/repository/org/apache/parquet/parquet-common/1.8.2-SNAPSHOT/parquet-common-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
+cp ~/.m2/repository/org/apache/parquet/parquet-encoding/1.8.2-SNAPSHOT/parquet-encoding-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
+cp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
 # Copy jars
 cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/jars/"
 cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/assembly/target/scala-2.10/jars"
+
 # Copy examples and dependencies
 mkdir -p "$DISTDIR/examples/jars"
 cp "$SPARK_HOME"/examples/target/scala*/jars/* "$DISTDIR/examples/jars"

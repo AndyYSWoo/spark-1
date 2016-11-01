@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.parquet.filter2.compat.RowGroupFilter;
 import scala.Option;
 
 import static org.apache.parquet.filter2.compat.RowGroupFilter.filterRowGroups;
@@ -107,7 +108,9 @@ public abstract class SpecificParquetRecordReaderBase<T> extends RecordReader<Vo
       footer = readFooter(configuration, file, range(split.getStart(), split.getEnd()));
       MessageType fileSchema = footer.getFileMetaData().getSchema();
       FilterCompat.Filter filter = getFilter(configuration);
-      blocks = filterRowGroups(filter, footer.getBlocks(), fileSchema);
+      blocks = RowGroupFilter.filterRowGroupsByCBFM(filter, footer.getBlocks(), fileSchema);
+      blocks = filterRowGroups(filter, blocks, fileSchema);
+//      blocks = filterRowGroups(filter, footer.getBlocks(), fileSchema);
     } else {
       // otherwise we find the row groups that were selected on the client
       footer = readFooter(configuration, file, NO_FILTER);

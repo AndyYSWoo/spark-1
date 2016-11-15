@@ -111,9 +111,7 @@ public abstract class SpecificParquetRecordReaderBase<T> extends RecordReader<Vo
       FilterCompat.Filter filter = getFilter(configuration);
       blocks = footer.getBlocks();
 //      blocks = filterRowGroups(filter, blocks, fileSchema);
-      if(CBFM.ON){
-        blocks = RowGroupFilter.filterRowGroupsByCBFM(filter, blocks, fileSchema);
-      }
+      blocks = RowGroupFilter.filterRowGroupsByCBFM(filter, blocks, fileSchema);
     } else {
       // otherwise we find the row groups that were selected on the client
       footer = readFooter(configuration, file, NO_FILTER);

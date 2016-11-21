@@ -17,4 +17,4 @@ export SPARK_HOME = "/Users/yongshangwu/work/spark-latest/dist"
 rm -rf *.parquet
 # ./bin/spark-submit --class me.yongshang.cbfm.sparktest.SparkTest --master local $app_jar_file
 #./bin/spark-submit --class me.yongshang.cbfm.sparktest.DataGenerator --master local $app_jar_file
-./bin/spark-submit --class me.yongshang.cbfm.sparktest.QueryTest --master local $app_jar_file $data_source_folder $record_dir $index
+./bin/spark-submit --class me.yongshang.cbfm.sparktest.QueryTest --master local $app_jar_file $data_source_folder $record_dir $index # --files ./conf/spark-defaults.conf --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit'

@@ -18,6 +18,14 @@ cp ~/.m2/repository/org/apache/parquet/parquet-column/1.8.2-SNAPSHOT/parquet-col
 cp ~/.m2/repository/org/apache/parquet/parquet-common/1.8.2-SNAPSHOT/parquet-common-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
 cp ~/.m2/repository/org/apache/parquet/parquet-encoding/1.8.2-SNAPSHOT/parquet-encoding-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
 cp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar "$SPARK_HOME"/assembly/target/scala*/jars
+
+# scp parquet-hadoop to serverss
+scp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar root@server1:/Users/yongshangwu/work/spark-latest/dist/assembly/target/scala-2.10/jars/
+scp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar root@server2:/Users/yongshangwu/work/spark-latest/dist/assembly/target/scala-2.10/jars/
+scp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar root@server3:/Users/yongshangwu/work/spark-latest/dist/assembly/target/scala-2.10/jars/
+scp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar root@server6:/Users/yongshangwu/work/spark-latest/dist/assembly/target/scala-2.10/jars/
+scp ~/work/parquet-mr/parquet-hadoop/target/parquet-hadoop-1.8.2-SNAPSHOT.jar root@server7:/Users/yongshangwu/work/spark-latest/dist/assembly/target/scala-2.10/jars/
+
 # Copy jars
 cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/jars/"
 cp "$SPARK_HOME"/assembly/target/scala*/jars/* "$DISTDIR/assembly/target/scala-2.10/jars"
@@ -54,3 +62,13 @@ cp "$SPARK_HOME/README.md" "$DISTDIR"
 cp -r "$SPARK_HOME/bin" "$DISTDIR"
 cp -r "$SPARK_HOME/python" "$DISTDIR"
 cp -r "$SPARK_HOME/sbin" "$DISTDIR"
+
+# Build project
+cd /Users/yongshangwu/work/TestOnSpark
+mvn package
+
+# Transfer app jar, conf & run script
+scp ~/work/TestOnSpark/target/sparktest-1.0-SNAPSHOT.jar yongshangwu@server1:/Users/yongshangwu/work/TestOnSpark/target/
+scp ~/work/spark-latest/conf/spark-env.sh yongshangwu@server1:/Users/yongshangwu/work/spark-latest/dist/conf/
+scp ~/work/spark-latest/conf/spark-defaults.conf yongshangwu@server1:/Users/yongshangwu/work/spark-latest/dist/conf/
+scp ~/work/spark-latest/bin/run-proj.sh yongshangwu@server1:/Users/yongshangwu/work/spark-latest/dist/bin/		

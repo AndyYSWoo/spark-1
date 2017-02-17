@@ -15,5 +15,19 @@
 # limitations under the License.
 #
 
-# A Spark Worker will be started on each of the machines listed below.
-localhost
+# Default system properties included when running spark-submit.
+# This is useful for setting default environmental settings.
+
+# Example:
+# spark.master                     spark://master:7077
+# spark.eventLog.enabled           true
+# spark.eventLog.dir               hdfs://namenode:8021/directory
+# spark.serializer                 org.apache.spark.serializer.KryoSerializer
+spark.network.timeout 60000
+spark.shuffle.memoryFraction 0
+spark.driver.memory 12g
+spark.executor.memory 40g
+spark.executor.cores 5
+spark.cores.max 20
+spark.executor.extraJavaOptions -XX:-UseGCOverheadLimit
+spark.driver.extraJavaOptions -XX:-UseGCOverheadLimit
